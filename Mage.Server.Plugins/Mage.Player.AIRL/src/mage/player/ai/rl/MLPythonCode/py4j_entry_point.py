@@ -4789,6 +4789,8 @@ class PythonEntryPoint:
             'main_train_sample_counter': self.main_train_sample_counter,
             'gae_enabled_step': self.metrics.gae_enabled_step,
         }
+        # Callers (e.g. the GPU host's SIGTERM handler) pass "" to mean the default path.
+        path = path or self.persistence.model_path
         self.persistence.save_model(self.model, path, extra_state=extra)
 
     def _heal_collapsed_scales(self):
