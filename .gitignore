@@ -65,6 +65,7 @@ mage-bundle.zip
 
 # Python virtual environments
 .mtgrl_venv/
+.mtgrl_venv_hpc/
 .mage_ai_venv/
 venv/
 .venv/
