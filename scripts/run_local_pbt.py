@@ -338,6 +338,7 @@ class LocalPBT:
                 shutil.rmtree(d, ignore_errors=True)
             log(f"Cleaned {len(ort_dirs)} leaked ORT temp dirs")
         # Mulligan trace grows unbounded
+        PROFILES_ROOT.mkdir(parents=True, exist_ok=True)  # gitignored, absent on fresh clones
         for profile_dir in PROFILES_ROOT.iterdir():
             trace = profile_dir / "logs" / "python" / "mulligan_trace.jsonl"
             if trace.exists() and trace.stat().st_size > 50 * 1024 * 1024:  # > 50MB
