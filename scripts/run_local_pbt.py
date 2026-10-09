@@ -99,6 +99,15 @@ def _prepend_cuda_paths(env: dict) -> None:
     if additions:
         sep = ";" if sys.platform == "win32" else ":"
         env["PATH"] = sep.join(additions) + sep + env.get("PATH", "")
+    if sys.platform.startswith("linux"):
+        # Java ORT GPU needs CUDA 12 / cuDNN 9 libs; reuse the ones pip installed for torch.
+        import site
+        lib_dirs = []
+        for sp in site.getsitepackages():
+            lib_dirs.extend(sorted(str(p) for p in Path(sp).glob("nvidia/*/lib")))
+        if lib_dirs:
+            existing = env.get("LD_LIBRARY_PATH", "")
+            env["LD_LIBRARY_PATH"] = ":".join(lib_dirs + ([existing] if existing else []))
 
 
 def _visible_nvidia_gpu_count() -> Optional[int]:
