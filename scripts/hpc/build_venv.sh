@@ -47,11 +47,13 @@ venv_pip="$venv_path/bin/pip"
   "numpy>=1.21.0" \
   "tensorboard>=2.12.0" \
   "torch-tb-profiler>=0.4.0" \
-  "transformers>=4.30.0"
+  "transformers>=4.30.0" \
+  "onnx" \
+  "onnxruntime"
 
 "$venv_python" - <<'PY'
 import importlib
-mods = ["py4j", "numpy", "torch", "tensorboard", "transformers"]
+mods = ["py4j", "numpy", "torch", "tensorboard", "transformers", "onnx", "onnxruntime"]
 missing = []
 for m in mods:
     try:
